@@ -14,32 +14,32 @@ import config
 
 def input_fn(path):
 
-	with tf.variable_scope('input_fn'):
-	
-		# Read in the CSV one line at a time
-		dataset = tf.data.TextLineDataset(path).skip(1)
+    with tf.variable_scope('input_fn'):
+    
+        # Read in the CSV one line at a time
+        dataset = tf.data.TextLineDataset(path).skip(1)
 
-		# Map the data into the specific features
-		dataset = dataset.map(_parse_line)
-		dataset = dataset.repeat().shuffle(buffer_size=512)
+        # Map the data into the specific features
+        dataset = dataset.map(_parse_line)
+        dataset = dataset.repeat().shuffle(buffer_size=512)
 
-		# Batch and return iterator
-		dataset = dataset.batch(config.BATCH_SIZE)
-		iterator = dataset.make_one_shot_iterator()
-		
-		return iterator.get_next()
+        # Batch and return iterator
+        dataset = dataset.batch(config.BATCH_SIZE)
+        iterator = dataset.make_one_shot_iterator()
+        
+        return iterator.get_next()
 
 def _parse_line(line):
 
-	# Decode the line into fields
-	fields = tf.decode_csv(line, config.FIELD_DEFAULTS, select_cols=[i for i in range(3,27)])
+    # Decode the line into fields
+    fields = tf.decode_csv(line, config.FIELD_DEFAULTS, select_cols=[i for i in range(3,27)])
 
-	# Pack the Results into a dictionary
-	features = dict(zip(config.COLUMN_NAMES, fields))
+    # Pack the Results into a dictionary
+    features = dict(zip(config.COLUMN_NAMES, fields))
 
-	# Pop out of the label
-	label = features.pop('winPlacePerc')
+    # Pop out of the label
+    label = features.pop('winPlacePerc')
 
-	return features, label
+    return features, label
 
 
