@@ -1,7 +1,7 @@
 # Welcome to my PUBG Final Placement Prediction Repo
 This is my attempt at Kaggle's PUBG Final Placement Prediction competition. We are given various features from players from thousands of games on thousands of teams and are tasked with predicting the win probability for each team
 
-![](./meta/graph.png)
+![](meta/graph.png)
 
 # Links
 * [kaggle](https://www.kaggle.com/)
